@@ -9,6 +9,7 @@ loop do
     when 'QIT'
       client.puts "LOG received quit"
       client.close
+      break
     when 'CNG'
       puts 'received change ' + command[3..-1]
     else
@@ -18,3 +19,5 @@ loop do
 
   end
 end
+
+
