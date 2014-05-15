@@ -6,16 +6,17 @@ $root_folder = './test'
 
 def write_at(filepath, line, data)
   File.open(filepath, 'r+') do |f|
-    while (line-=1) >= 0          # read up to the line you want to write after
+    while (line-=1) >= 0            # read up to the line you want to write after
       f.readline
     end
     pos_before = f.pos              # save your position in the file
     f.readline unless f.eof?
     rest = f.read                   # save the rest of the file
-    f.seek(pos_before)                      # go back to the old position
+    f.seek(pos_before)              # go back to the old position
     puts "writing: #{data}"
-    f.write(data)            # write new data & rest of file
-    f.write(rest) unless rest.nil?
+    output = data + (rest || '') 
+    f.write(output)                 # write new data & rest of file
+    f.truncate(pos_before + output.size)
   end
 end
 
